@@ -152,6 +152,31 @@ describe.only('second suite', () => {});`,
 
     // Single describe.only at top level — no blank line needed
     `describe.only('only suite', () => {});`,
+
+    // Function reference callback — proper spacing inside handler suite
+    `describe('suite', handler);
+
+function handler() {
+    it('foo', () => {});
+
+    it('bar', () => {});
+}`,
+
+    // Arrow function reference — proper spacing
+    `const handler = () => {
+    it('foo', () => {});
+
+    it('bar', () => {});
+};
+
+describe('suite', handler);`,
+
+    // Single call inside function reference suite — no blank line needed
+    `describe('suite', handler);
+
+function handler() {
+    it('foo', () => {});
+}`,
   ],
 
   invalid: [
@@ -358,6 +383,43 @@ describe.only('second suite', () => {});`,
         it('second', () => {});
     });
 });`,
+      errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
+    },
+
+    // Function reference callback — missing blank line inside handler suite
+    // only it('bar') is flagged because it('foo') is the first item in scope
+    {
+      code: `describe('suite', handler);
+
+function handler() {
+    it('foo', () => {});
+    it('bar', () => {});
+}`,
+      output: `describe('suite', handler);
+
+function handler() {
+    it('foo', () => {});
+
+    it('bar', () => {});
+}`,
+      errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
+    },
+
+    // Arrow function reference — missing blank line inside handler suite
+    {
+      code: `const handler = () => {
+    it('foo', () => {});
+    it('bar', () => {});
+};
+
+describe('suite', handler);`,
+      output: `const handler = () => {
+    it('foo', () => {});
+
+    it('bar', () => {});
+};
+
+describe('suite', handler);`,
       errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
     },
   ],

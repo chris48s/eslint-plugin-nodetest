@@ -115,6 +115,45 @@ describe.skip.only('suite2', function() {
     before(function() {});
   });
 });`,
+
+    // Function reference callback — hook inside handler is in a different scope
+    // to the standalone outer hook: should NOT be flagged as a duplicate
+    `function handler() { before(function() {}); }
+describe('suite', handler);
+before(function() {});`,
+
+    // Arrow function reference — same rule
+    `const handler = () => { before(() => {}); };
+describe('suite', handler);
+before(() => {});`,
+
+    // Function expression reference
+    `const handler = function() { before(function() {}); };
+describe('suite', handler);
+before(function() {});`,
+
+    // Member expression hooks inside a function-reference suite are not flagged
+    // (t.before() is a sub-test hook, not a top-level hook)
+    `function handler() {
+  t.before(function() {});
+  t.before(function() {});
+}
+describe('suite', handler);`,
+
+    // Arrow function reference suite with repeated member expression hooks
+    `const handler = () => {
+  t.before(() => {});
+  t.before(() => {});
+};
+describe('suite', handler);`,
+
+    // Mix of plain hook (once) and member expression hooks inside function-reference suite — no duplication
+    `function handler() {
+  before(function() {});
+  t.before(function() {});
+  t.before(function() {});
+}
+describe('suite', handler);`,
   ],
 
   invalid: [
@@ -221,6 +260,49 @@ describe.skip.only('suite2', function() {
   before(function() {});
 });`,
       errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 3 }],
+    },
+
+    // Function reference callback — duplicate hooks inside handler suite
+    {
+      code: `describe('suite', handler);
+function handler() {
+  before(function() {});
+  before(function() {});
+}`,
+      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
+    },
+
+    // Arrow function reference — duplicate hooks inside handler suite
+    {
+      code: `const handler = () => {
+  before(() => {});
+  before(() => {});
+};
+describe('suite', handler);`,
+      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 3 }],
+    },
+
+    // Duplicate plain hook inside function-reference suite alongside member expression hooks
+    // The member expression hooks (t.before) should not be flagged; only the duplicate plain before() should be
+    {
+      code: `function handler() {
+  before(function() {});
+  t.before(function() {});
+  before(function() {});
+}
+describe('suite', handler);`,
+      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
+    },
+
+    // Arrow function reference suite: duplicate plain hook alongside member expression hooks
+    {
+      code: `const handler = () => {
+  before(() => {});
+  t.before(() => {});
+  before(() => {});
+};
+describe('suite', handler);`,
+      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
     },
   ],
 });

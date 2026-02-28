@@ -99,6 +99,27 @@ describe.only('describe2', function() {});`,
     // Deeper chains — different titles, should be valid
     `describe.skip.only('describe1', function() {});
 describe.skip.only('describe2', function() {});`,
+
+    // Function reference callback — title inside handler is in a different scope
+    // from the outer title: should NOT be flagged as a duplicate
+    `function handler() { it('title', function() {}); }
+describe('suite', handler);
+it('title', function() {});`,
+
+    // Arrow function reference — same rule
+    `const handler = () => { it('title', () => {}); };
+describe('suite', handler);
+it('title', () => {});`,
+
+    // Function expression reference
+    `const handler = function() { it('title', function() {}); };
+describe('suite', handler);
+it('title', function() {});`,
+
+    // Suite title inside function reference doesn't conflict at outer level
+    `function handler() { describe('nested', function() {}); }
+describe('suite', handler);
+describe('nested', function() {});`,
   ],
 
   invalid: [
@@ -242,6 +263,26 @@ describe.skip.only('title', function() {});`,
   it.skip.only('title', function() {});
 });`,
       errors: [{ messageId: "duplicateTestTitle", line: 3 }],
+    },
+
+    // Function reference callback — duplicate test titles inside handler suite
+    {
+      code: `describe('suite', handler);
+function handler() {
+  it('foo', function() {});
+  it('foo', function() {});
+}`,
+      errors: [{ messageId: "duplicateTestTitle", line: 4 }],
+    },
+
+    // Function reference callback — duplicate suite titles inside handler suite
+    {
+      code: `describe('suite', handler);
+function handler() {
+  describe('nested', function() {});
+  describe('nested', function() {});
+}`,
+      errors: [{ messageId: "duplicateSuiteTitle", line: 4 }],
     },
   ],
 });
