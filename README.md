@@ -68,11 +68,12 @@ TODO: Run eslint-doc-generator to generate the configs list (or delete this sect
 
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                                                 | Description                               | 🔧 |
-| :----------------------------------------------------------------------------------- | :---------------------------------------- | :- |
-| [consistent-spacing-between-blocks](docs/rules/consistent-spacing-between-blocks.md) | Require consistent spacing between blocks | 🔧 |
-| [no-empty-title](docs/rules/no-empty-title.md)                                       | Disallow empty test descriptions          |    |
-| [no-identical-title](docs/rules/no-identical-title.md)                               | Disallow identical titles                 |    |
+| Name                                                                                 | Description                                                        | 🔧 |
+| :----------------------------------------------------------------------------------- | :----------------------------------------------------------------- | :- |
+| [consistent-spacing-between-blocks](docs/rules/consistent-spacing-between-blocks.md) | Require consistent spacing between blocks                          | 🔧 |
+| [no-empty-title](docs/rules/no-empty-title.md)                                       | Disallow empty test descriptions                                   |    |
+| [no-identical-title](docs/rules/no-identical-title.md)                               | Disallow identical titles                                          |    |
+| [no-sibling-hooks](docs/rules/no-sibling-hooks.md)                                   | Disallow duplicate uses of a hook at the same level inside a suite |    |
 
 <!-- end auto-generated rules list -->
 
