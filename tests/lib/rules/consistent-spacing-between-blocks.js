@@ -74,13 +74,34 @@ describe();`,
     // it() outside a describe — no previous sibling, no blank line needed
     `it('does something outside a describe block', () => {});`,
 
-    // Comments between blocks should count as sufficient spacing
+    // Blank line BEFORE a comment between two blocks — the blank line
+    // is enough regardless of where it sits relative to the comment
     `describe('My Test With Comments', () => {
     it('does something', () => {});
 
     // Some comment
     afterEach(() => {});
 });`,
+
+    // Blank line AFTER a comment between two blocks — also sufficient
+    `describe('My Test With Comments After', () => {
+    it('does something', () => {});
+    // Some comment
+
+    afterEach(() => {});
+});`,
+
+    // Blank line before comment at the top level
+    `describe('first suite', () => {});
+
+// A comment between suites
+describe('second suite', () => {});`,
+
+    // Blank line after comment at the top level
+    `describe('first suite', () => {});
+// A comment between suites
+
+describe('second suite', () => {});`,
 
     // Chained call .timeout() — single item in suite, no blank line needed
     {
@@ -420,6 +441,53 @@ describe('suite', handler);`,
 };
 
 describe('suite', handler);`,
+      errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
+    },
+
+    // Comment between two blocks with no blank line anywhere — should error
+    // and the fix should insert a blank line before the comment
+    {
+      code: `describe('My Test', () => {
+    it('does something', () => {});
+    // comment
+    afterEach(() => {});
+});`,
+      output: `describe('My Test', () => {
+    it('does something', () => {});
+
+    // comment
+    afterEach(() => {});
+});`,
+      errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
+    },
+
+    // Same pattern at top level
+    {
+      code: `describe('first suite', () => {});
+// comment
+describe('second suite', () => {});`,
+      output: `describe('first suite', () => {});
+
+// comment
+describe('second suite', () => {});`,
+      errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
+    },
+
+    // Multiple comments between two blocks with no blank line
+    {
+      code: `describe('My Test', () => {
+    it('first', () => {});
+    // comment one
+    // comment two
+    it('second', () => {});
+});`,
+      output: `describe('My Test', () => {
+    it('first', () => {});
+
+    // comment one
+    // comment two
+    it('second', () => {});
+});`,
       errors: [{ messageId: "missingLineBreak", type: "CallExpression" }],
     },
   ],
