@@ -13,21 +13,21 @@ Examples of **incorrect** code for this rule:
 ```js
 it();
 
-suite('');
+suite("");
 
 test(function () {});
 
-test.only(' ', function () {});
+test.only(" ", function () {});
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-describe('foo', function () {
-    it('bar');
+describe("foo", function () {
+  it("bar");
 });
 
-suite('foo', function () {
-    test('bar');
+suite("foo", function () {
+  test("bar");
 });
 ```

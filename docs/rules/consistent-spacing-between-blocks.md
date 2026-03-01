@@ -8,18 +8,17 @@
 
 Example:
 
-
 ```js
-describe('MyComponent', function () {
-    beforeEach(function () {
-        // setup code
-    });
-    it('should behave correctly', function () {
-        // test code
-    });
-    afterEach(function () {
-        // teardown code
-    });
+describe("MyComponent", function () {
+  beforeEach(function () {
+    // setup code
+  });
+  it("should behave correctly", function () {
+    // test code
+  });
+  afterEach(function () {
+    // teardown code
+  });
 });
 ```
 
@@ -32,50 +31,50 @@ This rule enforces a line break between calls to `node:test` functions (before, 
 Examples of **incorrect** code for this rule:
 
 ```js
-describe('MyComponent', function () {
-    beforeEach(function () {
-        // setup code
-    });
-    it('should behave correctly', function () {
-        // test code
-    });
+describe("MyComponent", function () {
+  beforeEach(function () {
+    // setup code
+  });
+  it("should behave correctly", function () {
+    // test code
+  });
 });
 ```
 
 ```js
-suite('MyComponent', function () {
-    beforeEach(function () {
-        // setup code
-    });
-    test('should behave correctly', function () {
-        // test code
-    });
+suite("MyComponent", function () {
+  beforeEach(function () {
+    // setup code
+  });
+  test("should behave correctly", function () {
+    // test code
+  });
 });
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-describe('MyComponent', function () {
-    beforeEach(function () {
-        // setup code
-    });
+describe("MyComponent", function () {
+  beforeEach(function () {
+    // setup code
+  });
 
-    it('should behave correctly', function () {
-        // test code
-    });
+  it("should behave correctly", function () {
+    // test code
+  });
 });
 ```
 
 ```js
-suite('MyComponent', function () {
-    beforeEach(function () {
-        // setup code
-    });
+suite("MyComponent", function () {
+  beforeEach(function () {
+    // setup code
+  });
 
-    test('should behave correctly', function () {
-        // test code
-    });
+  test("should behave correctly", function () {
+    // test code
+  });
 });
 ```
 

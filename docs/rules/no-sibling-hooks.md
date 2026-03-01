@@ -11,46 +11,50 @@ This rule looks for every call to `before`, `after`, `beforeEach` and `afterEach
 Examples of **incorrect** code for this rule:
 
 ```js
-describe('foo', function () {
-    var mockUser;
-    var mockLocation;
+describe("foo", function () {
+  var mockUser;
+  var mockLocation;
 
-    before(function () { // Is allowed this time
-        mockUser = { age: 50 };
-    });
+  before(function () {
+    // Is allowed this time
+    mockUser = { age: 50 };
+  });
 
-    before(function () { // Duplicate! Is not allowed this time
-        mockLocation = { city: 'New York' };
-    });
+  before(function () {
+    // Duplicate! Is not allowed this time
+    mockLocation = { city: "New York" };
+  });
 
-    // Same for the other hooks
-    after(function () {});
-    after(function () {}); // Duplicate!
+  // Same for the other hooks
+  after(function () {});
+  after(function () {}); // Duplicate!
 
-    beforeEach(function () {});
-    beforeEach(function () {}); // Duplicate!
+  beforeEach(function () {});
+  beforeEach(function () {}); // Duplicate!
 
-    afterEach(function () {});
-    afterEach(function () {}); // Duplicate!
+  afterEach(function () {});
+  afterEach(function () {}); // Duplicate!
 });
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-describe('foo', function () {
-    var mockUser;
-    var mockLocation;
+describe("foo", function () {
+  var mockUser;
+  var mockLocation;
 
-    before(function () { // Is allowed this time
-        mockUser = { age: 50 };
-        mockLocation = { city: 'New York' };
-    });
+  before(function () {
+    // Is allowed this time
+    mockUser = { age: 50 };
+    mockLocation = { city: "New York" };
+  });
 
-    describe('bar', function () {
-        before(function () { // Is allowed because it's nested in a new describe
-            // ...
-        });
+  describe("bar", function () {
+    before(function () {
+      // Is allowed because it's nested in a new describe
+      // ...
     });
+  });
 });
 ```

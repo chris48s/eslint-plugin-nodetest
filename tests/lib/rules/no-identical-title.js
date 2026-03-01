@@ -1,5 +1,5 @@
 /**
- * @fileoverview Disallow identical titles
+ * @file Disallow identical titles
  * @author chris48s
  */
 "use strict";

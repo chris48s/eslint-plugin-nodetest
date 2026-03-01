@@ -17,6 +17,8 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
     "test": "mocha tests --recursive",
     "update:eslint-docs": "eslint-doc-generator"
   },
@@ -24,13 +26,18 @@
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
-    "eslint": "^9.0.0",
     "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-doc-generator": "^2.0.0",
     "eslint-plugin-eslint-plugin": "^6.0.0",
+    "eslint-plugin-jsdoc": "^62.7.1",
     "eslint-plugin-n": "^17.0.0",
+    "eslint-plugin-prettier": "^5.5.5",
     "mocha": "^11.0.0",
-    "npm-run-all2": "^6.1.2"
+    "npm-run-all2": "^6.1.2",
+    "prettier": "^3.8.1",
+    "prettier-plugin-jsdoc": "^1.8.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"

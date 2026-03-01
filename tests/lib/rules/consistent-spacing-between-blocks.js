@@ -1,5 +1,5 @@
 /**
- * @fileoverview Require consistent spacing between blocks
+ * @file Require consistent spacing between blocks
  * @author chris48s
  */
 "use strict";

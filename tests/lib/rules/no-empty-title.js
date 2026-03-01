@@ -1,5 +1,5 @@
 /**
- * @fileoverview Disallow empty test descriptions
+ * @file Disallow empty test descriptions
  * @author chris48s
  */
 "use strict";
@@ -177,4 +177,3 @@ ruleTester.run("no-empty-title", rule, {
     },
   ],
 });
-

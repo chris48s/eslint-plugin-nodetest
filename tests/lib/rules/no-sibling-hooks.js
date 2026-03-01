@@ -1,5 +1,5 @@
 /**
- * @fileoverview Disallow duplicate uses of a hook at the same level inside a suite
+ * @file Disallow duplicate uses of a hook at the same level inside a suite
  * @author chris48s
  */
 "use strict";
@@ -172,7 +172,9 @@ describe('suite', handler);`,
     // Duplicate beforeEach inside describe
     {
       code: "describe(function() { beforeEach(function() {}); beforeEach(function() {}); });",
-      errors: [{ messageId: "duplicateHook", data: { hookName: "beforeEach" } }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "beforeEach" } },
+      ],
     },
 
     // Duplicate afterEach inside describe
@@ -196,7 +198,9 @@ describe('suite', handler);`,
     before(function() {});
   });
 });`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 5 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 5 },
+      ],
     },
 
     // Outer suite has duplicate — nested suite does not
@@ -208,7 +212,9 @@ describe('suite', handler);`,
   });
   before(function() {});
 });`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 6 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 6 },
+      ],
     },
 
     // Three occurrences — two errors (second and third are duplicates)
@@ -219,8 +225,16 @@ describe('suite', handler);`,
   beforeEach(function() {});
 });`,
       errors: [
-        { messageId: "duplicateHook", data: { hookName: "beforeEach" }, line: 3 },
-        { messageId: "duplicateHook", data: { hookName: "beforeEach" }, line: 4 },
+        {
+          messageId: "duplicateHook",
+          data: { hookName: "beforeEach" },
+          line: 3,
+        },
+        {
+          messageId: "duplicateHook",
+          data: { hookName: "beforeEach" },
+          line: 4,
+        },
       ],
     },
 
@@ -250,7 +264,13 @@ describe('suite', handler);`,
   beforeEach(() => {});
   beforeEach(() => {});
 });`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "beforeEach" }, line: 3 }],
+      errors: [
+        {
+          messageId: "duplicateHook",
+          data: { hookName: "beforeEach" },
+          line: 3,
+        },
+      ],
     },
 
     // describe.only — still a suite scope
@@ -259,7 +279,9 @@ describe('suite', handler);`,
   before(function() {});
   before(function() {});
 });`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 3 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 3 },
+      ],
     },
 
     // Function reference callback — duplicate hooks inside handler suite
@@ -269,7 +291,9 @@ function handler() {
   before(function() {});
   before(function() {});
 }`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 4 },
+      ],
     },
 
     // Arrow function reference — duplicate hooks inside handler suite
@@ -279,7 +303,9 @@ function handler() {
   before(() => {});
 };
 describe('suite', handler);`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 3 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 3 },
+      ],
     },
 
     // Duplicate plain hook inside function-reference suite alongside member expression hooks
@@ -291,7 +317,9 @@ describe('suite', handler);`,
   before(function() {});
 }
 describe('suite', handler);`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 4 },
+      ],
     },
 
     // Arrow function reference suite: duplicate plain hook alongside member expression hooks
@@ -302,7 +330,9 @@ describe('suite', handler);`,
   before(() => {});
 };
 describe('suite', handler);`,
-      errors: [{ messageId: "duplicateHook", data: { hookName: "before" }, line: 4 }],
+      errors: [
+        { messageId: "duplicateHook", data: { hookName: "before" }, line: 4 },
+      ],
     },
   ],
 });
