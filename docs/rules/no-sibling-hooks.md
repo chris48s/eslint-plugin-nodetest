@@ -1,4 +1,6 @@
-# Disallow duplicate uses of a hook at the same level inside a suite (`nodetest/no-sibling-hooks`)
+# nodetest/no-sibling-hooks
+
+📝 Disallow duplicate uses of a hook at the same level inside a suite.
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

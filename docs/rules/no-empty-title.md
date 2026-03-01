@@ -1,4 +1,6 @@
-# Disallow empty test descriptions (`nodetest/no-empty-title`)
+# nodetest/no-empty-title
+
+📝 Disallow empty test descriptions.
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

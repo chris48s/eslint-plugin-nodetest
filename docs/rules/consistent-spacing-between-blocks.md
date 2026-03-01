@@ -1,4 +1,6 @@
-# Require consistent spacing between blocks (`nodetest/consistent-spacing-between-blocks`)
+# nodetest/consistent-spacing-between-blocks
+
+📝 Require consistent spacing between blocks.
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

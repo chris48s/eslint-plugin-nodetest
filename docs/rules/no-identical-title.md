@@ -1,4 +1,6 @@
-# Disallow identical titles (`nodetest/no-identical-title`)
+# nodetest/no-identical-title
+
+📝 Disallow identical titles.
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
