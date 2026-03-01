@@ -7,6 +7,7 @@
     "eslintplugin",
     "eslint-plugin"
   ],
+  "homepage": "https://github.com/chris48s/eslint-plugin-node-core-test",
   "author": "chris48s",
   "type": "module",
   "main": "./lib/index.js",
