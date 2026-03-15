@@ -52,6 +52,11 @@ ruleTester.run("no-skipped-tests", rule, {
     // t.skip is not called on the context param
     "test('foo', function (t) { other.skip(); })",
 
+    // Context param shadowed by inner function — not the test context
+    "test('foo', function (t) { function f(t) { t.skip(); } })",
+    "test('foo', function (t) { const f = function(t) { t.skip(); }; })",
+    "test('foo', function (t) { const f = (t) => { t.skip(); }; })",
+
     // Dynamic skip value — cannot be statically analysed, so allowed
     "test('foo', { skip: skipIt }, function () {})",
     "test('foo', { skip: getSkip() }, function () {})",
@@ -139,6 +144,12 @@ ruleTester.run("no-skipped-tests", rule, {
     // Different context param name
     {
       code: "test('foo', function (ctx) { ctx.skip(); })",
+      errors: [error],
+    },
+
+    // t.skip() accessed via closure (inner function does not shadow the param)
+    {
+      code: "test('foo', function (t) { function f() { t.skip(); } f(); })",
       errors: [error],
     },
   ],

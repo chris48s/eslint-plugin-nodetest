@@ -52,6 +52,11 @@ ruleTester.run("no-incomplete-tests", rule, {
     // t.todo is not called on the context param
     "test('foo', function (t) { other.todo(); })",
 
+    // Context param shadowed by inner function — not the test context
+    "test('foo', function (t) { function f(t) { t.todo(); } })",
+    "test('foo', function (t) { const f = function(t) { t.todo(); }; })",
+    "test('foo', function (t) { const f = (t) => { t.todo(); }; })",
+
     // Dynamic todo value — cannot be statically analysed, so allowed
     "test('foo', { todo: isTodo }, function () {})",
     "test('foo', { todo: getTodo() }, function () {})",
@@ -139,6 +144,12 @@ ruleTester.run("no-incomplete-tests", rule, {
     // Different context param name
     {
       code: "test('foo', function (ctx) { ctx.todo(); })",
+      errors: [error],
+    },
+
+    // t.todo() accessed via closure (inner function does not shadow the param)
+    {
+      code: "test('foo', function (t) { function f() { t.todo(); } f(); })",
       errors: [error],
     },
   ],
