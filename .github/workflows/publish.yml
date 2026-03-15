@@ -1,0 +1,23 @@
+name: Publish
+on: create
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    if: github.event.ref_type == 'tag'
+    permissions:
+      contents: read
+      id-token: write # required for trusted publishing
+    environment: publish
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Node JS 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install
+        run: npm ci
+
+      - run: npm publish
