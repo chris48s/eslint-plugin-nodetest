@@ -1,3 +1,7 @@
+## 📦 0.2.1
+
+Build/packaging fixes
+
 ## 📦 0.2.0
 
 New rules added:
