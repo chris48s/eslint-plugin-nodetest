@@ -64,6 +64,9 @@ ruleTester.run("no-incomplete-tests", rule, {
     // FunctionDeclaration callback by reference — handler NOT passed to a test/suite
     "function handler(t) { t.todo(); }",
     "function handler(t) { t.todo(); } notATestFunc('foo', handler);",
+
+    // Identifier callback with options object — NOT a test/suite call
+    "function handler(t) { t.todo(); } notATestFunc('foo', {}, handler);",
   ],
 
   invalid: [
@@ -168,6 +171,16 @@ ruleTester.run("no-incomplete-tests", rule, {
     },
     {
       code: "function handler(t) { t.todo(); } describe('foo', handler);",
+      errors: [error],
+    },
+
+    // Callback by reference with an options object — still caught
+    {
+      code: "function handler(t) { t.todo(); } test('foo', {}, handler);",
+      errors: [error],
+    },
+    {
+      code: "function handler(t) { t.todo(); } test('foo', { timeout: 1000 }, handler);",
       errors: [error],
     },
 
